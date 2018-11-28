@@ -45,6 +45,27 @@ class MainActivity : AppCompatActivity() {
 
         val action = MotionEventCompat.getActionMasked(event)
         when (action) {
+            MotionEvent.ACTION_POINTER_DOWN
+            -> {
+                Log.v(TAG, "The second finger is down")
+
+                val pointerIndex = MotionEventCompat.getActionIndex(event)
+                Log.v(TAG, "index was $pointerIndex")
+
+                val pointerID = MotionEventCompat.getPointerId(event, pointerIndex)
+                Log.v(TAG, "pointerID was $pointerID")
+
+                view!!.addTouch(pointerID, x, y)
+                return true
+            }
+            MotionEvent.ACTION_POINTER_UP
+            -> {
+                Log.v(TAG, "second pointer up")
+                val pointerIndex = MotionEventCompat.getActionIndex(event)
+                val pointerID = MotionEventCompat.getPointerId(event, pointerIndex)
+                view!!.removeTouch(pointerID)
+                return true
+            }
             MotionEvent.ACTION_DOWN //put finger down
             -> {
                 //Log.v(TAG, "finger down");
