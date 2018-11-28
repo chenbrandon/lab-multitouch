@@ -14,6 +14,9 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.MotionEvent
+import android.support.v4.view.MotionEventCompat.getPointerId
+
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -86,11 +89,22 @@ class MainActivity : AppCompatActivity() {
                 return true
             }
             MotionEvent.ACTION_MOVE //move finger
-            ->
+            -> {
                 //Log.v(TAG, "finger move");
                 //                view.ball.cx = x;
                 //                view.ball.cy = y;
+
+
+                val pointerCount = event.pointerCount
+                for (i in 0..pointerCount) {
+                    val pointerID = event.getPointerId(i)
+                    val x = event.getX(pointerID)
+                    val y = event.getY(pointerID) - supportActionBar!!.height
+                    view!!.moveTouch(pointerID, x, y)
+                }
+
                 return true
+            }
             MotionEvent.ACTION_UP //lift finger up
                 , MotionEvent.ACTION_CANCEL //aborted gesture
                 , MotionEvent.ACTION_OUTSIDE //outside bounds

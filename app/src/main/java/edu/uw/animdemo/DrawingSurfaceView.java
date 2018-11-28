@@ -88,6 +88,16 @@ public class DrawingSurfaceView extends SurfaceView implements SurfaceHolder.Cal
     }
 
     /**
+     * takes in a pointer id (e.g., Ball id), and the “latest” x,y coordinates for that Ball
+     * Updates the appropriate Ball’s position to reflect these latest coordinates
+     */
+    public synchronized void moveTouch(int pointerID, float x, float y) {
+        Ball ball = touches.get(pointerID);
+        ball.cx = x;
+        ball.cy = y;
+    }
+
+    /**
      * Initialize graphical drawing state
      */
     public void init(){
